@@ -80,7 +80,10 @@ export const login = async function (req, res, next) {
     const { password: pass, ...orderDetails } = user._doc;
     console.log(token);
     res
-      .cookie('access_token', token)
+      .cookie('access_token', token, {
+        httpOnly: true,
+        sameSite: 'none',
+      })
       .status(200)
       .json({ userDetails: orderDetails });
   } catch (err) {
