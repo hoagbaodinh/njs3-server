@@ -58,6 +58,11 @@ app.use('/api/session', sessionRoutes);
 app.use('/api/message', messageRoutes);
 app.use('/api/cart', cartRoutes);
 
+app.use('/', (req, res) => {
+  console.log(req.cookies.access_token);
+  res.send('Welcome');
+});
+
 app.use((error, req, res, next) => {
   console.log(error);
   const status = error.status || 500;
