@@ -76,7 +76,6 @@ export const login = async function (req, res, next) {
       },
       process.env.JWT_SECRET
     );
-    console.log('Sign: ' + token);
     //Bo password khoi du lieu gui ve client
     const { password: pass, ...orderDetails } = user._doc;
 

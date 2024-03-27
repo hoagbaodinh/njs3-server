@@ -5,14 +5,14 @@ export const verifyToken = (req, res, next) => {
   if (!token) {
     const error = new Error('Not authenticated');
     error.status = 401;
-    next(error);
+    return next(error);
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
       const error = new Error('Token is not valid');
       error.status = 403;
-      next(error);
+      return next(error);
     }
     req.user = user;
     next();
@@ -26,11 +26,9 @@ export const verifyUser = (req, res, next) => {
     if (!req.user) {
       const error = new Error('You are not authorized');
       error.status = 403;
-      next(error);
-    } else {
-      console.log('not error');
-      next();
+      return next(error);
     }
+    next();
   });
 };
 
@@ -41,9 +39,8 @@ export const verifyAdmin = (req, res, next) => {
     if (!req.user?.isAdmin) {
       const error = new Error('You are not authorized');
       error.status = 403;
-      throw error;
-    } else {
-      next();
+      return next(error);
     }
+    next();
   });
 };

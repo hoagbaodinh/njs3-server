@@ -22,13 +22,13 @@ export const getCart = async (req, res, next) => {
           item.quantity > item.stock ? { ...item, quantity: item.stock } : item
         )
         .filter((item) => item.quantity !== 0);
-      res.status(200).json(filterItems);
+      return res.status(200).json(filterItems);
     } else {
       const newCart = await Cart.create({
         userId: req.params.userId,
         items: [],
       });
-      res.status(201).json(newCart.items);
+      return res.status(201).json(newCart.items);
     }
   } catch (err) {
     if (!err.statusCode) {
