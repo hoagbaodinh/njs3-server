@@ -57,6 +57,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/session', sessionRoutes);
 app.use('/api/message', messageRoutes);
 app.use('/api/cart', cartRoutes);
+app.set('trust proxy', 1);
 
 app.use('/', (req, res) => {
   console.log(req.cookies.access_token);
