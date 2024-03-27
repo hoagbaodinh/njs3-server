@@ -78,7 +78,7 @@ export const login = async function (req, res, next) {
     );
     //Bo password khoi du lieu gui ve client
     const { password: pass, ...orderDetails } = user._doc;
-
+    console.log(token);
     res
       .cookie('access_token', token)
       .status(200)
