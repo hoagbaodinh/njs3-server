@@ -41,7 +41,12 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://njs-asm3-client-mtlz.onrender.com',
+      'https://njs-asm3-admin-862k.onrender.com',
+    ],
     credentials: true,
   })
 );
