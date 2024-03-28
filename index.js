@@ -50,7 +50,11 @@ app.use(
     credentials: true,
   })
 );
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+);
 app.use(compression());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
