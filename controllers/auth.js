@@ -1,4 +1,3 @@
-import { validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
 import User from '../models/user.js';
 import jwt from 'jsonwebtoken';
@@ -7,13 +6,21 @@ export const register = async function (req, res, next) {
   const { fullname, email, password, phone, isConsultant, isAdmin } = req.body;
 
   try {
-    const errors = validationResult(req);
-    // Kiem tra loi input
-    if (!errors.isEmpty()) {
-      const error = new Error('Validation failed');
-      error.statusCode = 422;
-      error.data = errors.array();
-      throw error;
+    if (!fullname || !email || !password || !phone) {
+      const err = new Error('You must provide all required fields');
+      err.statusCode = 422;
+      throw err;
+    }
+    const checkEmail = await User.findOne({ email: email });
+    if (checkEmail) {
+      const err = new Error('Email already in use');
+      err.statusCode = 422;
+      throw err;
+    }
+    if (password.length < 8) {
+      const err = new Error('Password must be at least 8 characters');
+      err.statusCode = 422;
+      throw err;
     }
 
     // Ma hoa password
@@ -43,14 +50,13 @@ export const register = async function (req, res, next) {
 export const login = async function (req, res, next) {
   try {
     const { email, password } = req.body;
-    // Kiem tra input
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const error = new Error('Validation failed');
-      error.statusCode = 422;
-      error.data = errors.array();
-      throw error;
+
+    if (!email || !password) {
+      const err = new Error('You must provide all required fields');
+      err.statusCode = 422;
+      throw err;
     }
+
     // Tim user thong qua email
     const user = await User.findOne({ email: email });
     // Bao loi neu khong tim thay user

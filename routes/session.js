@@ -8,8 +8,6 @@ import {
   updateSession,
 } from '../controllers/session.js';
 
-// import { body } from 'express-validator';
-
 const router = express.Router();
 
 router.post('/create', createSession);
