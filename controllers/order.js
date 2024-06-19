@@ -8,8 +8,7 @@ import formatPrice from '../util/format-price.js';
 const transporter = nodemailer.createTransport(
   sendGridTransport({
     auth: {
-      api_key:
-        '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',
+      api_key: process.env.SEND_GRID_API,
     },
   })
 );
